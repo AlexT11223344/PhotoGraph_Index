@@ -17,6 +17,7 @@
     <h2>Input keyword:</h2>
     <input type="text" name="keyword">
     <input type="submit" id="search" value="Search">
+    <div>Input key word : ${Keyword}</div>
 
 </form>
 
