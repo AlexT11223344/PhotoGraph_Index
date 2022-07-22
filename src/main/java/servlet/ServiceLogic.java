@@ -18,8 +18,14 @@ public class ServiceLogic extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MySQLdb mySQLdb = MySQLdb.getInstance();
+
         String keyword = request.getParameter("keyword");
         request.getSession().setAttribute("Keyword", keyword);
+
+        String selected_value = request.getParameter("photographer");
+        request.getSession().setAttribute("Selected_value", selected_value);
+        System.out.println(selected_value);
+
 
         try {
             List<String> keywords = mySQLdb.fetchKeywords();
@@ -69,6 +75,7 @@ public class ServiceLogic extends HttpServlet {
             ArrayList results_year = new ArrayList();
             ArrayList results_photographer = new ArrayList();
             ArrayList results_fileName = new ArrayList();
+            ArrayList results_keywords = new ArrayList();
 
 
 
@@ -98,6 +105,7 @@ public class ServiceLogic extends HttpServlet {
                         results_year.add(year_Array[i]);
                         results_photographer.add(photographer_Array[i]);
                         results_fileName.add(fileName_Array[i]);
+                        results_keywords.add(keywords_Array[i]);
                     }
                     else continue;
                 }
@@ -110,7 +118,8 @@ public class ServiceLogic extends HttpServlet {
             request.getSession().setAttribute("results_Location", results_location);
             request.getSession().setAttribute("results_Year", results_year);
             request.getSession().setAttribute("results_Photographer", results_photographer);
-            request.getSession().setAttribute("result_FileName", results_fileName);
+            request.getSession().setAttribute("results_FileName", results_fileName);
+            request.getSession().setAttribute("results_Keywords", results_keywords);
 
 
 

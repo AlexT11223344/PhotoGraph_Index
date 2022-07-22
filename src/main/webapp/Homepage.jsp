@@ -10,6 +10,8 @@
 <html>
 <head>
     <title>Home Page</title>
+    <script type="text/javascript" charset="utf-8" src="javascript/dropdownlist_submit.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 
@@ -17,10 +19,35 @@
 <form name="keyword" action="ServiceLogic" method="get">
     <h2>Input keyword:</h2>
     <input type="text" name="keyword">
-    <input type="submit" id="search" value="Search">
-    <div>Input key word : ${Keyword}</div>
 
+    <select name="photographer">
+        <option value="0" disabled selected hidden>Select photographer</option>
+        <option value="Auburn U student">Auburn U student</option>
+        <option value="Catherine Perricone">Catherine Perricone</option>
+        <option value="CatherinePerricone">CatherinePerricone</option>
+        <option value="Cornelia  Martin">Cornelia  Martin</option>
+        <option value="Cornelia L  Martin">Cornelia L  Martin</option>
+        <option value="Cornelia L Martin">Cornelia L Martin</option>
+        <option value="Cornelia Martin">Cornelia Martin</option>
+        <option value="David L Martin">David L Martin</option>
+        <option value="David L. Martin">David L. Martin</option>
+        <option value="David L.Martin">David L.Martin</option>
+        <option value="unknown">unknown</option>
+        <option value="unknown soldier">unknown soldier</option>
+        <option value="">Blank</option>
+    </select>
+
+    <input type="submit" id="search" value="Search">
+
+    <div>Input key word : ${Keyword}</div>
+    <div>Photographer: ${Selected_value}</div>
 </form>
+
+
+
+
+
+
 
 <form name="DBinfo" action="DbInfoServlet" method="get">
     <h2>Test connection to the DB and get infomation from it</h2>
@@ -40,7 +67,7 @@
 
 <p>*********************************************************</p>
 <div>Results : </div>
-<c:forEach items="${result_FileName}" var="result_filename" varStatus="i">
+<c:forEach items="${results_Keywords}" var="result_filename" varStatus="i">
     <li>${i.index + 1}. ${result_filename}</li>
 </c:forEach>
 
