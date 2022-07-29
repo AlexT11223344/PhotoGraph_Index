@@ -21,7 +21,7 @@
     <input type="text" name="keyword">
 
     <select name="photographer">
-        <option value="0" disabled selected hidden>Select photographer</option>
+        <option value="0" selected>Select photographer</option>
         <option value="Auburn U student">Auburn U student</option>
         <option value="Catherine Perricone">Catherine Perricone</option>
         <option value="CatherinePerricone">CatherinePerricone</option>
@@ -40,7 +40,7 @@
     <input type="submit" id="search" value="Search">
 
     <div>Input key word : ${Keyword}</div>
-    <div>Photographer: ${Selected_value}</div>
+    <div>Photographer: ${Photographer_input}</div>
 </form>
 
 
@@ -67,8 +67,8 @@
 
 <p>*********************************************************</p>
 <div>Results : </div>
-<c:forEach items="${results_Keywords}" var="result_filename" varStatus="i">
-    <li>${i.index + 1}. ${result_filename}</li>
+<c:forEach items="${results_Keywords}" var="result_keywords" varStatus="i">
+    <li>${i.index + 1}. ${result_keywords}</li>
 </c:forEach>
 
 <p id="keyword_print"></p>

@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,10 +23,9 @@ public class ServiceLogic extends HttpServlet {
         String keyword = request.getParameter("keyword");
         request.getSession().setAttribute("Keyword", keyword);
 
-        String selected_value = request.getParameter("photographer");
-        request.getSession().setAttribute("Selected_value", selected_value);
-        System.out.println(selected_value);
-
+        String photographer_input = request.getParameter("photographer");
+        request.getSession().setAttribute("Photographer_input", photographer_input);
+        System.out.println(photographer_input);
 
         try {
             List<String> keywords = mySQLdb.fetchKeywords();
@@ -82,33 +82,37 @@ public class ServiceLogic extends HttpServlet {
             for(int i =0; i < keywords_Array.length; i++){
 //                System.out.println(keywords_Array[i]);
 //                System.out.println(keywords_Array[i].getClass());
-                List<String> temp = Arrays.asList(keywords_Array[i].split(","));
-                String[] temp_arr = new String[temp.size()];
-                temp.toArray(temp_arr);
-//                System.out.println(temp_arr);
+                if (photographer_Array[i].trim().equals(photographer_input) == true || photographer_input.equals("0") == true){
+                    List<String> temp = Arrays.asList(keywords_Array[i].split(","));
+                    String[] temp_arr = new String[temp.size()];
+                    temp.toArray(temp_arr);
 
-                for(int j =0; j < temp_arr.length; j++){
-                    temp_arr[j] = temp_arr[j].replaceAll("[\\pP‘’“”]" , "");
-                    temp_arr[j] = temp_arr[j].trim();
-                    String temp_arr_lowercase = temp_arr[j].toLowerCase();
+                    for(int j =0; j < temp_arr.length; j++){
+                        temp_arr[j] = temp_arr[j].replaceAll("[\\pP‘’“”]" , "");
+                        temp_arr[j] = temp_arr[j].trim();
+                        String temp_arr_lowercase = temp_arr[j].toLowerCase();
 //                    System.out.println(fileName_Array[i]);
 //                    System.out.println(temp_arr_lowercase);
 //                    String str_regex = "^(?i)" + temp_arr[j] + "$";
 //                    Pattern p = Pattern.compile(str_regex, Pattern.CASE_INSENSITIVE);
 
-                    if(temp_arr_lowercase.indexOf(keyword.toLowerCase()) != -1){
+                        if(temp_arr_lowercase.indexOf(keyword.toLowerCase()) != -1){
 //                        System.out.println(temp_arr[j]);
 //                        System.out.println("keyword is:" + keyword);
-                        results_disNum.add(diskNum_Array[i]);
-                        results_slideNum.add(slideNum_Array[i]);
-                        results_location.add(location_Array[i]);
-                        results_year.add(year_Array[i]);
-                        results_photographer.add(photographer_Array[i]);
-                        results_fileName.add(fileName_Array[i]);
-                        results_keywords.add(keywords_Array[i]);
+                            results_disNum.add(diskNum_Array[i]);
+                            results_slideNum.add(slideNum_Array[i]);
+                            results_location.add(location_Array[i]);
+                            results_year.add(year_Array[i]);
+                            results_photographer.add(photographer_Array[i]);
+                            results_fileName.add(fileName_Array[i]);
+                            results_keywords.add(keywords_Array[i]);
+                        }
+                        else{
+                            continue;
+                        }
                     }
-                    else continue;
                 }
+                else continue;
             }
 //            for (String str : keywords){
 //                System.out.println(str);
